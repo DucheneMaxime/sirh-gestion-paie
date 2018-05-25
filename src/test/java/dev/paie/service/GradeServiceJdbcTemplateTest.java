@@ -12,11 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import dev.paie.config.DataSourceMySQLConfig;
+import dev.paie.config.H2Config;
 import dev.paie.config.ServicesConfig;
 import dev.paie.entite.Grade;
 
-@ContextConfiguration(classes = { DataSourceMySQLConfig.class, ServicesConfig.class })
+@ContextConfiguration(classes = { H2Config.class, ServicesConfig.class })
 @RunWith(SpringRunner.class)
 public class GradeServiceJdbcTemplateTest {
 
@@ -45,19 +45,13 @@ public class GradeServiceJdbcTemplateTest {
 		}
 		assertTrue(testContains);
 
-		// Création d'un second grade
-		Grade gradeModif = new Grade();
-		gradeModif.setCode("autre");
-		gradeModif.setNbHeuresBase(new BigDecimal("40"));
-		gradeModif.setTauxBase(new BigDecimal("11.0954"));
-
 		// Mettre à jour un grade
+		gradeTest.setCode("autre");
 		gradeService.mettreAJour(gradeTest);
 
 		// Vérifier que les modifs sont prises en compte
-		List<Grade> listeTestModif = gradeService.lister();
 		String newCode = gradeTest.getCode();
-		assertTrue(!(newCode.equals("autre")));
+		assertTrue(newCode.equals("autre"));
 	}
 
 }
