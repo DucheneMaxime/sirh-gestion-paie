@@ -13,8 +13,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import dev.paie.config.H2Config;
+import dev.paie.config.JpaConfig;
 import dev.paie.config.ServicesConfig;
-import dev.paie.console.JpaConfig;
 import dev.paie.entite.Cotisation;
 
 @ContextConfiguration(classes = { JpaConfig.class, H2Config.class, ServicesConfig.class })

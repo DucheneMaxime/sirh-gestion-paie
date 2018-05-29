@@ -4,3 +4,5 @@ create table grade (
   nbHeuresBase double,
   tauxBase double
   );
+
+select * from rem_non_impo
