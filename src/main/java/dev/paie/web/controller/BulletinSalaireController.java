@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -68,4 +69,19 @@ public class BulletinSalaireController {
 		return mv;
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/visualiser/{id}")
+	public ModelAndView visualiserBulletin(@PathVariable Integer id) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("bulletins/visualiserBulletin");
+
+		BulletinSalaire bulletin = bsr.findOne(id);
+		mv.addObject("bulletin", bulletin);
+
+		// ResultatCalculRemuneration calcul = crs.calculer(bulletin);
+		// mv.addObject("calcul", calcul);
+
+		RemunerationEmploye employe = bulletin.getRemunerationEmploye();
+		mv.addObject("employe", employe);
+		return mv;
+	}
 }
