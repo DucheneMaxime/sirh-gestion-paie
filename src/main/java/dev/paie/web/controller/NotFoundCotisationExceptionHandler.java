@@ -12,8 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class NotFoundCotisationExceptionHandler extends ResponseEntityExceptionHandler {
 
-	@ExceptionHandler(value = { DataIntegrityViolationException.class, IllegalArgumentException.class,
-			IllegalStateException.class })
+	@ExceptionHandler(value = { DataIntegrityViolationException.class })
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
 		String bodyOfResponse = "Ce code n'existe pas";

@@ -1,6 +1,7 @@
 package dev.paie.web.controller;
 
 import java.time.ZonedDateTime;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import dev.paie.entite.Collegue;
 import dev.paie.entite.Entreprise;
 import dev.paie.entite.Grade;
 import dev.paie.entite.ProfilRemuneration;
 import dev.paie.entite.RemunerationEmploye;
+import dev.paie.repository.CollegueRepository;
 import dev.paie.repository.EntrepriseRepository;
 import dev.paie.repository.GradeRepository;
 import dev.paie.repository.ProfilRemunerationRepository;
@@ -35,10 +39,21 @@ public class RemunerationEmployeController {
 	@Autowired
 	RemunerationEmployeRepository rer;
 
+	@Autowired
+	CollegueRepository cr;
+
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
 	public ModelAndView creerEmploye() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("employes/creerEmploye");
+
+		RestTemplate rt = new RestTemplate();
+		Collegue[] toutEmployes = rt.getForObject("https://jsonplaceholder.typicode.com/posts", Collegue[].class);
+		List<Collegue> matricules = new LinkedList<>();
+		for (int i = 0; i < toutEmployes.length; i++) {
+			matricules.add(toutEmployes[i]);
+		}
+		mv.addObject("matricules", matricules);
 
 		List<Entreprise> entreprises = er.findAll();
 		mv.addObject("entreprises", entreprises);
