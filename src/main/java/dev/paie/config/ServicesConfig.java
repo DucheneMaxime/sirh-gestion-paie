@@ -10,11 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @ComponentScan("dev.paie.service, dev.paie.util")
-<<<<<<< HEAD
-@Import({ JpaConfig.class, HerokuDBConfig.class })
-=======
-@Import({ JpaConfig.class, DataSourceMySQLConfig.class, SecurityConfig.class })
->>>>>>> master
+@Import({ JpaConfig.class, HerokuDBConfig.class, SecurityConfig.class })
 
 @EnableJpaRepositories("dev.paie.repository")
 public class ServicesConfig {
