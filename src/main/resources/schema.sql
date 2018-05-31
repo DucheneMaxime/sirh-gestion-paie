@@ -5,4 +5,4 @@ create table grade (
   tauxBase double
   );
 
-select * from rem_non_impo
+select * from cotisation

@@ -50,12 +50,12 @@ public class RemunerationEmployeController {
 		mv.setViewName("employes/creerEmploye");
 
 		RestTemplate rt = new RestTemplate();
-		Collegue[] toutEmployes = rt.getForObject("https://jsonplaceholder.typicode.com/posts", Collegue[].class);
+		Collegue[] toutEmployes = rt.getForObject("http://collegues-api.cleverapps.io/collegues", Collegue[].class);
 		List<Collegue> matricules = new LinkedList<>();
 		for (int i = 0; i < toutEmployes.length; i++) {
 			matricules.add(toutEmployes[i]);
 		}
-		mv.addObject("matricules", matricules);
+		mv.addObject("collegues", matricules);
 
 		List<Entreprise> entreprises = er.findAll();
 		mv.addObject("entreprises", entreprises);
