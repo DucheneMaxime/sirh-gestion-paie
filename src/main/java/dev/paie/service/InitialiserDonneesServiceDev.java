@@ -6,7 +6,9 @@ import java.util.Collection;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,12 +17,17 @@ import dev.paie.entite.Entreprise;
 import dev.paie.entite.Grade;
 import dev.paie.entite.Periode;
 import dev.paie.entite.ProfilRemuneration;
+import dev.paie.entite.Utilisateur;
+import dev.paie.entite.Utilisateur.ROLES;
 
 @Service
 public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 
 	@PersistenceContext
 	EntityManager em;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	@Transactional
@@ -47,6 +54,20 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 		for (Cotisation cotisation : cotisations) {
 			em.persist(cotisation);
 		}
+
+		Utilisateur admin = new Utilisateur();
+		admin.setEstActif(true);
+		admin.setMotDePasse(passwordEncoder.encode("admin"));
+		admin.setNomUtilisateur("admin");
+		admin.setRole(ROLES.ROLE_ADMINISTRATEUR);
+		em.persist(admin);
+
+		Utilisateur user = new Utilisateur();
+		user.setEstActif(true);
+		user.setMotDePasse(passwordEncoder.encode("user"));
+		user.setNomUtilisateur("user");
+		user.setRole(ROLES.ROLE_UTILISATEUR);
+		em.persist(user);
 
 		for (int i = 1; i <= 12; i++) {
 			LocalDate dateDebut = LocalDate.of(LocalDate.now().getYear(), i, 1);
