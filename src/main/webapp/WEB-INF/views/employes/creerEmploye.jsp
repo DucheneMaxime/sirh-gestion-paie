@@ -36,8 +36,8 @@
 		<form:form method="post" modelAttribute="employe">
 			<div class="form-group row">
 				<label for="matricule" class="col-3 col-form-label">Matricule</label>
-				<form:input path="matricule" type="text" class="form-control col-9" name="matricule" id="matricule" placeholder="Entrez le matricule..." />
-			</div>
+				<form:select class="col-9" items="${collegues}" path="matricule" itemValue="matricule" itemLabel="matricule"></form:select>
+							</div>
 			<div class="form-group row">
 				<label for="entreprise" class="col-3 col-form-label">Entreprise</label>
 				<form:select class="col-9" items="${entreprises}" path="entreprise.id" itemValue="id" itemLabel="denomination"></form:select>
